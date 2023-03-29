@@ -1,0 +1,34 @@
+curl http://169.254.169.254/latest/user-data = aws ke instance banate waqt konse command shell script mein likhe the vo btata hai .
+
+
+http://54.236.33.223:8080/ = jyaada kaam ka nahi hai.
+
+
+pipeline{
+   agent any 
+   stages{
+       stage('fetch code'){
+          steps{
+             git branch: 'paac' , url: 'https://github.com/devopshydclub/vprofile-project.git'
+          }
+       }
+
+       stage('Build'){
+           steps{
+             sh 'mvn install'
+           }
+       }
+        
+        stage('test'){
+            steps{
+                sh 'mvn test'
+            }
+        }
+   }
+ 
+}
+
+
+yeh pipeline thi jo ki run nhi hui hai.
+
+

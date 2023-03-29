@@ -1,0 +1,7 @@
+****array easy 
+
+intersection of two array
+missing number in array ke solution mein different question hai than original in gfg.
+maximum number of ones ka youtube par solution dusre question ka solution hai
+subarray with given sum (time limit exceeded)
+ 
