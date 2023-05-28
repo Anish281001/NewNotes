@@ -1,0 +1,202 @@
+docker starts here --->>>>
+
+* docker uses lxc containers.
+
+unlike the virtual machines the containers cannot used tohost the operating system. they are only used to complete a taask or process.
+
+docker run image-name = it means creating a container for me from this image named as image-name.
+
+docker-hub is the place where all the images are hosted .
+
+docker ps = if you want to see running container 
+
+docker ps -a = if you want to see a dead container . 
+
+Image become containers when they run on docker engine . docker image is stopped container which is archived .
+
+docker hub is the registry for docker image . 
+
+docker pull nginx = this will pull the image from docker hub by default . 
+
+docker run --name what -p 7090:80 -d nginx =  here image is nginx and what is the container name and -d is used for to run the container in the background not in foreground and d also shows detached mode  and 7090 is the host port and 80 is the port on which the service runs .
+
+docker start container name/id = this will start the stopped container .
+
+docker stop container name/id = this will stop the started container .
+
+container directory path = cd /var/lib/docker/containers/ . we can go into this directory with sudo user only.
+
+du -sh directory name  = check the size of the directory.
+
+container is just a process running from directory and all the data comes from the image.
+
+docker exec containername commandname = this is used to execute a command named as commandname  in the container named as containername.
+
+docker exec -it containername /bin/bash = by this command you can attach to a container which is a process. ( apni language mein container ke andar kaam karne k liye  container ka ek terminal khul jaayega .)
+
+docker container prune -f = delete all the exited containers.
+
+docker  rmi nginx:mainline-perl = it is used to remove the image . here removing image of nginx whose tagname is mainline-perl.
+
+docker rm containername/id : used to remove the container .
+
+if we have to remove the image , first we have to stop the container of that image then we have to remove the container than we can remove the image .
+
+docker run -it ubuntu /bin/bash = running a container interactive way . this time only the container will in the list pf running container after killing the process of /bin/bash  then container will go in the list of dead containers.
+
+docker inspect imagename = detailed information about image . this shows the meta data of image in json format. in this there are two things cmd and entrypoint . when we execute docker run then first the script in entrypoint will get execute then the commands in cmd . and the output of these execution will shown when we execute docker logs .
+
+docker run  -d -P nginx = here -P is for port mapping  means that it will automatically select host port and container port both . no need to mention both. here container is running in background.
+
+docker logs containername = it will show the output of the command that are executed in container.
+
+docker run -P nginx = container will run in foreground . it will take the shell of our os. we have to ctrl+c to take the shell again. after this container will also get dead.
+
+-e something = something = this means we are passing some values while running a contianer. -e also used to export the values .
+
+bind mount is usually used to inject the data from host machine to the container. (doubt on this definition).
+
+
+
+docker commit -m "message" containerid  image name:tag if any = isse kya hoga ki agar apn ne iss image name see containerid wala container banaya hoga aur usme kuch changes kiya hoga toh vo changes ab iss image mein add ho jaayenge . aur ab jab bhi iss image se naya container banayenge toh vo changes usme bhi dikhenge. 
+
+
+docker volume = command for volume.     
+
+docker volumes are stored in the path that is = /var/lib/docker/volumes/volumename.
+
+docker inspect command can also be run for container.
+
+docker run python:3.6 cat /etc/*release* = used to find the basic operating system used in Docker conatainer run by the given image name.
+
+docker build (docker file path) = used to build an image from docker file.
+
+docker-compose up = to execute a docker-compose file.
+
+
+docker consist of (docker deamon + rest api + docker cli ).
+docker deamon = it is the background process which manages docker objects such as container , images , volumes and networks.
+rest api = the docker rest api server is the api interface that progarams can be used to talk to docker deamon and provide instructions and you can create your own tools using rest api.
+docker cli = it is nothing but the command line interface is used to running container , creating images , etc.
+
+
+docker-cli need not be on same host with (restapi and docker deamon)
+docker -H=remote-docker-engine:2375 = to specify remote docker engine and  here as an example 2375 is remote docker engine port. 
+docker -H=10.123.2.1:2375 run nginx = here we are running a container of nginx image on remote docker engine. and here as an example  10.123.2.1  is an remote docker engine address.
+
+docker uses cgroups to restrict the amount  of resources used by the container. 
+docker run --cpus=.5 ubuntu = it means the container can use maximum 50% of cpu of underlying host .
+docker run --memory=100m ubuntu = it means contianer can use maximum 100mb of memory of underlying host.
+
+
+docker volume create  data_volume = it will create the docker volume  named as ex-data_volume in the /var/lib/docker/volumes 
+
+docker run  -v data_volume:/var/lib/mysql mysql = it is container mounting . it mounts the volume present in /var/lib/docker/volumes/ directory of docker engine to the volume /var/lib/mysql present in container . if any data stored in container's volume then it will automatically copy the data in the volume of docker engine. yeh mounting isliye use hoti hai if agar conatainer destroy ho jaaye toh bhi data safe hi rahega . aur agar docker engine ke andar jo volume hai agar vo pehle se created nahi hai toh yeh command ke run hone ke baad vo create ho jaayegi.
+aur ek hota hai bind mounting similar to container mounting only difference is the volume of docker engine is not present in /var/lib/docker/volumes directory.
+ex- docker run  -v /data/mysql:/var/lib/mysql mysql
+
+ex:- docker run --name cont -d -e MYSQL_ROOT_PASSWORD=secretpass -p 3030:3306 -v /home/saathi/docksamvol:/var/lib/mysql mysql:5.7 (particular example of bind mounting)
+
+mysql -h mysqlcontaineripaddress -u root -psecretpass = to work in that containers mysql server.
+
+other way of writing previous two type of mounting:
+docker run \
+--mount type=bind, source=/data/mysql , target=/var/lib/mysql  mysql 
+
+docker uses storage drivers to enable layered architecture. ex - aufs , etc.
+
+if we install docker that time docker create thre networks named as bridge , none and  host.
+by default container is connected with bridge .
+if you want to connect with other two then 
+docker run ubuntu --network=none  or 
+docker run ubuntu --network=host 
+
+if kisi web server ke container ko host network se associate kiya toh apan ko uss web server ko externally access karne ke liye port mapping ki jaroorat nhi hai. yeh same host port par access ho jaayega. par iss se yeh hoga ki apan koi aur dusra web server iss port par access nhi kar paayenge.
+
+if kisi container ko none network se associate kare to usse apan externally access nhi kar paayenge and nahi kisi aur container ko access kar paayenge. in this container run in isolated network. 
+
+docker network ls = to list the network. 
+
+docker network create --driver bridge --subnet 182.18.0.1/24 --gateway 182.18.0.1 wp-mysql-network = this type of commands are used to create a type of network we want.
+
+creating a registry and pushing image into it by running following commands :
+it is an example just change given information according to condition:
+
+docker run -d -p 5000:5000 --name registry registry:2
+docker image tag nginx:latest localhost:5000/nginx:latest
+docker push localhost:5000/nginx:latest
+
+command for pulling a image from registry:
+docker pull localhost:5000/nginx:latest
+
+docker stop my-registry = used to stop the registry.
+docker rm my-registry = used to remove the registry.
+
+docker attach container-id = to run the conatinerr in attach mode 
+-----------------------------
+archiving a file: (basic linux archiving)
+  mkdir images 
+  cdimages
+  cd images
+  ls
+  mkdir nano
+  wget https://www.tooplate.com/zip-templates/2122_nano_folio.zip
+  ls
+  sudo apt install unzip -y 
+  unzip  2122_nano_folio.zip 
+  ls
+  cd 2122_nano_folio/
+  ls
+  tar czvf nano.tar.gz *
+  ls
+  mv nano.tar.gz ../
+  ls
+  cd ..
+  ls
+  rm -rf 2122_nano_folio 2122_nano_folio.zip
+  ls
+  mv nano.tar.gz nano/
+  cd nano/
+  ls
+------------------------------
+dockerfile attributes:-
+
+FROM imagename  | this image name is the name of base image.
+
+LABEL "xxx"="yyy" | this is used to give some basic information about the image like  author, projectname , etc..
+
+RUN command(like full linux command) | it creates a layer and we should try to keep less no. of layers so good to all the commands that you want to run in a single RUN attribute.
+
+CMD ["command" , "arguement"] | this command is used to start the process . you can't give the service commands like systemctl. 
+
+ex :- CMD["/usr/sbin/apache2ctl","-D","FORGROUND"] | it is a special command to start apachehttpd service.
+
+EXPOSE portno. | this is used to expose the port of the container on which the service is running in the container . 
+
+WORKDIR pathofworkdir | this is the directory in the container in which all the files which we want to add from the docker host that will add there. 
+
+VOLUME pathofdir | this is the directory which is in the container is connected with corresponding docker volume which is in host ,so that any data of the container will regularly get stored in this volume , if container got destroyed then also the data is safe.
+
+ADD hostpath containerpath | it is used for adding files from host to container. here hostpath is file path in the docker host and containerpath is the path which is going to be  file path in container after adding.
+
+COPY | it is same as add but difference is that the add  untars the tar file while adding in container but copy don't do this.
+---------------------------
+differnt cases in docker file considering cmd and entrypoint :-
+
+case1 : cmd["echo" , "Hello"] = if we make the images from this docker file run the container on this image then hello will print. 
+
+case2: entrypoint = ["echo"] =  if we make the images from this docker file run the container on this image then nothing will print. if we pass any arguement at run time then that arguement will print.
+
+case3 : entrypoint = ["echo"] cmd["Hello"] = if we make the images from this docker file run the container on this image then the default arguement hello will print. if we pass any arguement at run time then that arguement will print which replaces default arguement.
+---------------------------------------
+
+docker compose is a tool to run a multi containers together.
+
+docker-compose ps =
+
+docker-compose top = 
+
+docker system prune -fa = saari unwanted things hta deta hai like unused images , exited containers , unused networks , etc .
+
+
+--------------------------------------

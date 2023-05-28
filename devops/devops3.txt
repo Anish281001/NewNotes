@@ -1,0 +1,380 @@
+
+Bash scripting 
+
+#!/bin/bash = this is the path of the interpretor 
+#! =this is shebang character 
+# = use to comment out a line .
+
+chmod +x file.sh = to make the script executable.
+
+script mein variable isliye declare jaata hai kyunki kuch cheez jo alag alag enviorment k hisab se change karni padti hai to unko script mein har jagah se replace na karna pade isliye keval variable mein change kardenge to vo har jagah change ho jaayegi.
+
+echo $? = yeh command yeh pata lagane k liye chalaya jaata hai ki pichle wala command sahi se run hua ki nhi .
+if it give value 0 then pichle wala command sahi se run hua hai . else if it give non-zero value then pichla command sahi se run nahi hua hai .  and this command can also be said as exit code .
+
+\ = if we put the backward slash just before any special character then  special character will be a functionless special character.
+
+agar kisi bhi variable ko permanent rakhna agar system restart ho to bhi naa jaaye to iske liye user ki home directory ke andar ek hidden file hoti hai  bashrc name se usme vo variable ko add karna padega.
+
+uss file ko vim editor mein open karke below command add kar do.
+export season ="Monsoon" 
+here variable is season and its value is Monsoon here . so here it is permanent.
+
+the upper command is for a particular user .like vagrant , root , etc .
+but if you want to do it globally then we have to update this in vim /etc/profile . and preference is more for /etc/profile  as compared to bashrc file.
+
+read -p password = this command is used to take the input .
+
+read -sp password  = this command is used while you giving input you can't able to see what you are typing as like password.
+
+if [$num -eq 1 ] 
+then
+     if value of num equal to 1.
+
+elif [$num -gt 1 ] 
+then
+     if value of num greater than  1.
+
+else
+     if value of num less than 1.
+
+
+agar if ko end karna ho toh fi likha jaata hai .
+
+kabhi bhi apan koi process chalate hai toh uss process ki .pid file banti hai jaise ki httpd  process run kiya toh (httpd.pid) file banegi jab tak vo process run krega tab tak ke liye. 
+
+you can check cat/var/run/httpd/httpd.pid . shayad yeh command process id dega.
+
+
+crontab -e  = used for scheduling a  task or scheduling a command to run .
+then after this a file will open in vim editor.
+
+ MM HH DOM mm DOW command = here the command is that command which you want to run .
+
+ * * * * * command = it command run in each minute .
+
+ mm= minute
+ hh = hour 
+ DOM = date of month
+ mm = month
+ DOW= day of week 
+
+
+ -------for loop syntax
+
+ for var in java net python ruby php
+ do 
+   echo "looping"
+   echo "value of variable is $var"
+ done
+
+ done is for end here .
+
+--------while loop syntax
+
+counter = 0
+
+while [$counter -lt 5]
+do
+  echo "looping..."
+  echo "value of counter is $counter"
+  counter=$(($counter + 1))
+done 
+
+???????? what does ping command do?
+Test your internet connection. Check if a remote machine is online. Analyze if there are network issues, such as dropped packages or high latency.
+
+export EDITOR=vim (whenever by default vim is not opening).
+
+public key is going to act as a lock .
+private key is going to act as a key .
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+aws starts :-
+
+ss -tunlp | grep 80 = we are finding port 80 from all the open tcp port.
+
+for each instance there can be multiple network interfaces 
+
+the public ip , security group ,etc all these things are created for network interfaces not for instances .
+
+ ls ~/.aws/              
+
+ ssh -i Downloads/web-dev-key.pem ubuntu@3.92.62.99
+
+ 54.83.64.177
+
+ x` = yeh command se jo bhi script apan  instance bnate wakt advance details mein script 
+  likhte hein vo sab instance ko computer mein run karke vo command pta lagaya jaa sakta hai.
+
+ubuntu ke instance mein tomcat install karna easy hota hai.
+
+route 53 kisi bhi instance ke ip ko ek name ke saath map karne mein kaam aata hai .
+
+
+
+---linux commands for partion format and mount:
+
+fdisk -l = this command is going to list all the disk .
+
+fdisk /dev/xvdf = to open the fdisk utility for  xvdf hardisk. ( mainly iske andar jaane ke baad apan partition banate hai disk mein )
+
+mkfs = these command  shows the type of formatting we can do with our disk . for this command to be run we have to hit tab 2 times not hit enter after typing the comamnd .
+
+mkfs.ext4 /dev/xvdf1 = to  format the xvdf1 partition  with ext4 format .
+
+???????????? what is the meaning of mounting ? and mounting  karte samay file khali rehni chahiye kya .
+
+here we  are taking the case of an toolplate website :-
+
+cd /var/www/html
+mkdir /tmp/img-bakups/
+mv images/* /tmp/img-bakups/
+ls images/   (iss samay images ke andar kuch bhi nhi rha hai kyunki sab img-bakups mein chala gaya hai .)
+
+mount /dev/xvdf1 /var/www/html/images = this comamnd is for mounting but temporary . if you reeboot your system no mounting remains.
+
+df -h = to checking the mounting .
+
+for permanent mounting :-
+
+vi /etc/fstab = we have to edit in this file some information as mentioned below:
+
+/dev/xvdf1     /var/www/html/images     ext4 defaults  0 0 
+0 and 0 is for dumping and file system check. 
+?????what is the use of defaults here .
+?????what is dumping and what is file system check .
+
+mount -a = this command is used to mount all the files that you enter in fstab file .
+
+mv  /tmp/img-bakups/* /var/www/html/images/
+
+note(optional) :: agar yeh sab karne ke baad website k live server par images nahi dikh rahi hai toh iss path(vi /etc/selinux/config) mein jaakar 
+SELINUX = disabled kardo. 
+
+ssh -i wavecafe-prod-nvir.pem ubuntu@52.207.220.109
+upaar wale command mein ubuntu ki jagah ec2-user use hoga when instance mein apan ne ubuntu linux ki jagah amazon-linux use kiya hai toh . 
+
+????? security groups ke inbound rules abhi samajh nhi aaye .
+
+agar launch template se koi instance naya banate hai toh vo saare instance separate users se nahi access kiye jaa sakte hai . vo ek hi end point se access kiye jaa sakte hai . aur vo endpoint hi request route karega alag alag instamce par . aur uss endpoint ko load balancer bolte hai . 
+
+mount -fav = this command we have to run after mounting a file system using efs access points it means after editing in fstab file.
+
+
+stress is a command which can stress your linux os on cpu and few other matrix .
+
+???? what is the stress.
+
+???? stress ke commmand samajh nhi aaya
+
+
+ The CPU Utilization CloudWatch metric shows CPU usage per instance and not CPU usage per core.
+
+we are going to host only static website on s3 bucket .
+
+$$$$$$$$$$$$$$ github token =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
+
+project:-
+
+git:
+
+git diff : file mein Changes bta dega . when file is not staged.
+
+git checkout file name : changes ko hta dega file se . when file is not staged.
+
+git diff --cached : file mein Changes bta dega . when file is staged.
+
+git restore --staged  filename : koi change karne ke baad file agar staged hai to usko unstaged kardega. uske baad iss command (git checkout ) ka use karke change ko hata sakte hai.
+
+git diff currentcommitid..lastcommitid = yeh command changes commit hone ke baad bhi kya changes tha vo btadega.
+
+git revert Head = commit hone ke baad changes ko roll back karne ke liye .
+
+git reset --hard commitid = iss commit id ke baad jitne bhi commit hue hai unki history delete kar dega yeh command . mtlb vo saare  commits history mein se hta dega . aur yeh commit id wale commit ke baad file jaise thi file ko vaise hi kar dega.
+
+--------------------------------------
+
+continous integration with jenkins 
+
+/var/lib/jenkins = it is a home directory of jenkins .
+
+ansible-galaxy init post-install =  command to init role directory structure . after this output on command line will be ( R
+
+http://18.234.193.28:8080/
+
+admin
+suinakan@gmail.com
+nopassword 
+
+jenkins is a continous integration server. 
+
+unit test checks whether unit of the code works or not. but code analysis checks if the code has any vulnerability , are you follwing the best practices , do you have the bug in the code and there are many other parameters on which code analysis will judge your code. 
+
+difference between freestyle projects and pipeline = if controller offine ho gaya toh jo freestyle job uss samay chal rhi thi vo jaise hi controller online aata hai toh resume nhi hogi but jo pipeline hoti hai, vo controller ke online aate hi resume ho jaati hai.                          
+
+------------------------------
+Ansible:--
+
+ansible is configuration management tool also a powerful automation tool .
+
+# for using ansible in linux we have to use ssh ,  in  windows we have to use winrm and we have to enable remote connection from windows powershell  and for different type of clouds it uses apis .
+
+# you don't need to setup any agent in the destination.
+
+# ansible -i inventory -m ping web01 =  kisi bhi dusre system se connection check karne k liye ping ka use karte h toh usko kane se pehle ek baar ansible  configuration file mein jaakar host_key_checking= false ko uncomment karna hai.
+
+# ansible -m setup {hostname} = command to get information about the host.
+
+
+
+terraform has speciality in cloud automation.
+
+inventory file in ansible stores the host information and group information and information about variables .
+
+default inventory  in ansible is  sudo ls /etc/ansible/hosts.
+
+configuration tools are idempotent in nature . jaise ki yeh command { ansible -i inventory -m yum -a "name=httpd state=present" web01 --become } agar jaise yeh command ek baar chalane ke baad vapas chalaya toh aisa nhi hai ki yeh vapas yum install httpd karega . kyunki web01 pehle se hi same state mein hai.
+
+ansible-playbook -i inventory web_db.yaml --syntax-check = yeh command playbook ka syntax check karne k liye kaam aata hai. 
+
+ansible -i inventory -m copy -a "src=index.html dest=/var/www/html/index.html" web01 --become = copying index.html from control machine to target machine . 
+
+ansible-doc -l = command to get the list of all modules .
+
+ansible-doc modulename = command to get the details about module.
+
+ansible-playbook -i inventory web_db.yaml -C = yeh command playbook run karne k liye nahi hai. kyunki yaha last C bhi lga hua hai iska mtlb yeh hai ki yeh command ko dry run karke output btayega but yeh actually run nhi hua hai. aur yeh output close to original output hoga naa ki original output hoga .
+
+/etc/ansible/ansible.cfg = default configuration file :- shayad also called as a global configuration file.
+                                                                         
+system warnings = these warnings based on the configuration setting of ansible itself.
+
+deprecation warnings = these warnings is for if you are using module , doing settings or writing playbook of older versions or using module which are depricated that means it is removed in further ansible upgrades so ansible will start giving deprecation warnings . 
+
+ansible-playbook db.yaml -vv = two level of verbosity.
+ansible-playbook db.yaml -vvv = three  level of verbosity.
+ansible-playbook db.yaml -vvvv = four level of verbosity.
+
+to print a variable or a mesage debug module is used.
+
+ansible-playbook  -e USRNM=value1 -e COMM=value2 vars_precedence.yaml = command for passing variables through command line.
+
+banner file is at  /etc/motd location . 
+
+handlers file ke last mein lagte hai aur last mein hi execute hote hain.
+
+ansible-galaxy init post-install =  command to init roles in role directory  . after this output on command line will be ( Role post-install was created successfully.).
+
+ansible galaxy = it is a name of website which have predefined roles.
+--------------------------------
+*******what is the difference between network and network interfaces
+*******what is the difference between mac address and ip address.
+
+----------------------------------------------------
+
+Jenkins starts here :-
+
+docker exec -ti jenkins bash = command for entry in container .
+
+./scriptname.sh = to run the script
+
+docker cp script.sh jenkins:/tmp/script.sh = copying file script.sh from host machine to container named as jenkins at path /tmp/script.shayad
+
+ctrl r for searching the command  jo ki pehle execute kiye hue hai. aur kuch type karo jaise ki agar upar wala hi command search karna hai toh cp type kar do .
+
+ssh-keygen -f remote-key = creating a ssh key in centos
+
+
+/var/lib/jenkins/config.xml = main configuration file of jenkins.
+
+/usr/lib/systemd/system/jenkins.service = file to set the port on which we want to run the jenkins service .
+
+
+/var/lib/jenkins/secrets = here we will find initial admin password.
+
+/usr/lib/jvm = here we can find what version of java are installed in our system.
+
+
+----------------------------------------------
+
+terraform:
+
+terraform helps in infrastructure as a code . it automates  infrastructure through code.
+
+
+
+---------------------------------------------------
+
+python:
+
+rule for passing arguemments to a function:
+
+func(params , args , default parameter , kwargs)
+
+when we  define functions like func( name,age,  args,  i=2 ,   kwargs)
+
+when we call functions like func('anish','twenty',   1,2,3,4,5,  num1=2,num2=1)  (default ko to call ke samay likhne ki jarrorat nhi hai)
+
+all genertors are iterables but not all iterables are generators. like list is a iterable not generator.
+
+
+----------------------------------------------
+
+yaml = yaml ain't markup language
+
+- it is a  data format used to exchange data.
+-similar to xml and json
+-in yaml you can store data only not the commands.
+
+
+yaml , json and xml are the data serialization languages.
+
+it is easily convertable to json and xml.
+
+parsing is easy in yaml.
+
+yaml is a collection of zero or more documents . in which documents are separated by --- and  file is ended by ...
+
+ 
+
+
+------------------------------------------------------------------------
+
+
+devops real world projects 1:-
+
+
+stack is used for the collection of services working together to create an experience 
+
+nginx is a web sservice just like apache , httpd  is commonly used to create the load balancing experience.
+as soon as request comes it will send to apache tomcat .
+
+apche tomcat is java web application service . if your application is written in java so it is very famous service to host it.
+
+if you require an external storage then you can use nfs service .
+
+rabbitmq is a message broker and also said as queueing agent to connect two application together 
+
+memcached is a very famous database caching service .
+
+database vm mein agar password set karna ho toh /etc/profile mein jaakar set karna hoga like DATABASE_PASS='admin123' yeh likh do udhar . uske baad yeh command (source /etc/profile) lagana taki yeh variable permanent ho jaaye. 
+
+-----------------------------------------
+
+jenkins revision:
+
+git repository se file uthakar jenkins mein build karna hai vo kaise karenge? try kara par error aa raha hai . 
+
+error = 
+Failed to connect to repository : Command "git ls-remote -h -- https://github.com/Anish281001/titanwork.git HEAD" returned status code 128:
+stdout:
+stderr: remote: Support for password authentication was removed on August 13, 2021.
+remote: Please see https://docs.github.com/en/get-started/getting-started-with-git/about-remote-repositories#cloning-with-https-urls for information on currently recommended modes of authentication.
+fatal: Authentication failed for 'https://github.com/Anish281001/titanwork.git/'
+
+
+from simplilearn revision :- time  1:33:55 
+
+if we want to build an  maven application on jenkins which was taken by github repository and deploy it on tomcat server which was running on the local host of the computer . in this case why it is mandatory to install maven on the jenkins box it means our laptop or localhost on which our tomcat server and jenkins is running.

@@ -1,0 +1,80 @@
+Networking :
+
+ip link - is used to list and modify the interfaces on the host.
+
+ip addr = is used to see the ip addresses assigned to those interfaces.
+
+ip addr add 192.168.1.10/24 dev eth0 = is used to add the ip address to  those interfaces. and changes made using this command are set until machine restarts. if you wsnt to persist these changes then you must set them in etc/network/interfaces file .
+
+ip route - is to view the route table.
+
+ip route add 192.168.1.0/24 via 192.168.2.1 = it is used to set the route to the destination 192.168.1.0/24 in the different network by  source network ip 192.168.2.1.
+
+ip route add default via 192.168.2.1 = this command is used to set the route to all destination from the source network . by setting the destination as default.
+
+cat /proc/sys/net/ipv4/ip_forward = this command is used to check that the ip forwarding is enabled or not . by default it is 0 it means ip forwarding is not enabled . then we have to modify it to 1 to start the ip forwarding .
+
+if we want to name a system with a name which you want to set then make the entry in /etc/hosts.
+ex-   vim /etc/hosts 
+192.168.1.11  db 
+
+so here we can put any no of names of an destination ip. any name we can use . 
+192.168.1.11  db 
+192.168.1.11  www.google.com  
+
+every host has dns resolve configuration file in which the the ip of dns server is assigned with name nameserver. 
+like if we print that file 
+   cat /etc/resolv.conf
+     nameserver  (ip address of dns server )
+
+this dns server is used when an host comes up with an destination hostname which is not known to it then the host will check this hostname in the dns sever. 
+
+as we know that /etc/hosts also stores the similar inforamtion which Dns server stores. but it is local . and dns server is central . but priority is more  for /etc/hosts by default . 
+
+but we can change this priority by  updating the file /etc/nsswitch.conf 
+
+hosts: files dns 
+
+so first it will check local files and then dns server.  
+
+osi model:
+
+application layer implemented in software applications like browser , messaging application ,etc.then we sent a data from applicaton layer to presentation layer. here protocols are ftp , telnet, http , etc.
+ 
+presentation layer converts the data from application layer to machine representable binary format. it provides encryption and abstarction of the data.data is also compressed here. ssl protocol is used here.
+
+session layer protocol helps in setting up and managing the connections and it enables the sending and receiving of the data followed by the termination of the connected sessions.
+
+transport layer has 3 parts . first , segmentation -> data come from the session layer divided into the small data units called the  segments , every segment contain the source and destination port numbers and sequence numbers(to reassemble the segments serially) . flow control- amount of the data that can be transferred . and error control that it adds the checksum to each data segment. 
+
+connection-less oriented transmission = UDP -> some data packets we loss while transmission.
+
+connection oriented transmission = TCP -> no data packets are loss or corrupted while transmission.
+
+network layer = trasmission of the recieve data segments from one computer to another that are in different networks. router lives in network layer. ip addressing done in the network layer is the logical addressing . network layers assign senders and recievers ip address to every segment and it forms an ip packet so that evey packet reach to the correct destination.also it performs routing moving 1 data packet from source to destinaton.
+
+datalink layer allows you to directly communicate with the computers and host. physical address are the mac addresses. physical addressing is done by the datalink layer. in which the mac addresses of sender and reciever are assigned to the data packet to form a frame .  so frame is a data unit at datalink layer. 
+
+mac address is a 12 digit alpha numeric number of the network interface of your computer . computer has different mac addresses ex computer's wifi had different mac addresses , computers bluetooth has different mac addresses. 
+datalink lyer performs the two functions it allows the upper layer of the osi model to access these frames and it also controls how the data is placed and recieved from the media using things known as media access control.
+
+physical basically contains of hardwares. it works with cables . data from above layer is in the form of 0 and 1 , then physical layer converts the data into different type of signals acc. to cond.  
+
+** networking devices ki definition video mein hi hai 1:40:08 par kunal kushwaha networking. 
+
+protocols :
+
+   web protocols:
+ 
+      tcp/ip protocols: http , dhcp , ftp, smtp, pop3&imac , ssh , vnc.
+      telnet:port 23
+
+
+tcp/ip model:
+
+application layer = users interacts in this layer. ex whatsapp , browser comes under this layer , etc.applicaation layer lies on our devices .
+
+
+
+
+

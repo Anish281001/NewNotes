@@ -1,0 +1,427 @@
+linux:-   
+                                                                 
+curl http://169.254.169.254/latest/user-data = aws ke instance banate waqt konse command shell script mein likhe the vo btata hai .
+
+cat /etc/os-release = give details of present guest operating system .
+
+sudo -i = this command is used to become a root user .
+
+cd = used for changing the directory
+
+mkdir= used for making the directory
+
+touch = used to create the file
+
+rm = used to remove the file 
+
+cd .. = used to come out from a directory
+
+ls = used for showing  the list of elements in directory.
+
+ls -a = use for showing the hidden files also.
+
+pwd = path of directory
+
+touch file{1..10}.txt = create the files named as file1.txt , files2.txt , files3.txt ------ files10.txt.
+
+cp file.txt dev/ = copy the file.txt to directory named as dev  (here this command copying the file with the relative path).
+
+cp  /home/vagrant/file.txt  /home/vagrant/dev/ = copy the file.txt to directory named as dev . (here this command is copying files with the absolute path).    
+
+cd ~ = used to come back in home directory from root directory.
+
+cp devdir bakupdir/ =you can't copy the one dir to another directory simply by cp command.
+
+cp -r devdir bakupdir/ = this is the command for copying the dev directory to bakupdir.
+
+mv file.txt dev/ = this is command for moving a file from  present directory to destination directory dev.
+
+mv ops dev/ =  this command is used for moving a ops directory to dev directory.
+
+mv f1.txt f2.txt = this command is used for moving one file f1.txt to f2.txt.
+
+mv *.txt devdir/ = this command is used for moving all the files which are ending with .txt extension to devdir directory.
+
+rm file.txt = this command is used for remove the file.txt from the present directory.
+
+rm -r devdir = this command is used for remove the directory devdir.
+
+
+--------------// vim editor------------
+
+------------- basic process starts :-
+
+
+vim firstfile.txt = command for creating a file  and open in vim editor or enter in the existing file of this name .
+
+this time it is in command mode .
+
+then press i
+
+after this vim editor is in insert mode.
+
+then write whatever you want 
+
+then press esc
+
+after this vim editor comes again in command mode .
+
+then press :
+
+vim editor comes in extended mode.
+ 
+and to save the file 
+
+press w and then press enter to save the file .
+
+for again the editor to be in command mode and exit  from the present file after saving the changes. 
+
+press esc : q
+
+for again the editor to be in command mode and forcefully exit  from the present file without saving the changes. 
+
+press esc : q!
+
+ ----ends----------- 
+
+----------commands starts:-
+
+cat firstfile.txt = this command is used to read the file . it only print the content of file on terminal.
+
+less firstfile.txt = this is also same as cat  but it acts as a reader little bit similar to vim editor have search option  and q for quit  , etc .
+
+more file.txt = cat jaisa hi hai isme content percentage me batata hai . enter dabane percentage badhta rehta hai .jyaada kaam ka nahi hai.
+
+:se nu = this command is used for setting the line numbers to each line .
+
+while capslock pressed  shift g = the command is used to go to first line .
+
+shift gg = command to go to last line .
+
+if you want to copy a specific line then set the cursor on that line then press yy and then if you want to paste it somewhere then press p to paste. if you want to paste above the line then press capital p otherwise small p for below the line .
+
+if you want to copy the n lines  starting from a specific line then  set cursor to that specific line and press n times y then it will copy all n lines including specific line .
+
+if you want to delete a specific line then set the cursor on that line then press dd to delete that line . 
+
+if you want undo the changes then press u .
+
+press n times d to delete n lines .
+
+yy then p is used to copy paste.
+
+dd then p is used to cut paste .
+
+if there are n lines to delete like more than 500 or any big number then press n and then press dd .
+
+if want to search a word like as network then       press /network          then editor will indicate all the lines with word network.
+
+:%s/wordtoreplace/word from we have to replace/g   used in vim editor to replace word with other word .
+
+
+visudo commands used to open the sudoers file in vim editor .
+
+if you want to replace the word1 with word2 in the vim editor then you have to type command = %s/word1/word2/g  . here g is for globally it means it change all the 
+existence of word1 with word2. 
+
+---------------------------/ command ends and vim editor also.----------------------
+
+
+general commands :-
+
+file devops.txt = this command shows which type of file is this . whether it is binaryfile or textfile it is .
+
+ls -l = give the extra details of files or directory with list.
+
+mkdir -p /opt/dev/ops/devops/test = creates whole path if they don't exists.
+
+ln -s /opt/dev/ops/devops/test/command.txt  cmds = agar command.txt file apan ko regular acces karni hai aur vo itni andar aisi files k liye apan iss function se ek link bna sakte hai . jaise ki isme cmds naam ka link banaya hai.
+
+unlink cmds = it is used when we have to remove the link named as cmds .
+
+ls -lt = showing files according to time when it is updated .
+
+ls -ltr = reverse of upper command .
+---------------------------------------------
+command for changing the hostname 
+
+vim /etc/hostname 
+hostname centos66.devops.in
+hostname 
+
+
+
+---------------------------------------------------------------------------------
+
+grep firewall anaconda.cfg = agar firewall word anaconda.cfg mein hoga to batayega.
+
+grep -i firewall anaconda.cfg = agar firewall ,Firewall , fireWall ,etc koi bhi hoga to bta dega .
+
+grep -i firewall * = poori directory ke andar agar yeh word ho toh bta dega . except any child directory in this directory.
+
+grep -iR firewall * = poori directory ke andar agar yeh word ho toh bta dega . child directory mein hoga toh bhi btadega .
+
+grep -vi firewall anaconda-ks.cfg = show all the lines of anaconda-ks.cfg except the lines which contain the firewall . 
+
+less anaconda-ks.cfg = it is like a reader show the file contents as same as cat command but something different from cat command.it looks like a vim editor but it's not vim.
+
+head anaconda-ks.cfg = it gives first 10 lines of the content of files.
+
+head -20 anaconda-ks.cfg = show first 20lines of file.
+
+head -2 anaconda-ks.cfg = show first 2 lines of file. (no. of lines are variable ).
+
+tail anaconda-ks.cfg = it gives last 10 lines of the content of files.
+
+tail -f anaconda-ks.cfg = it is also same as upper one but difference is it shows the contents dynamically mtlb jaise hi uss file mein change hoga to voh ussi samay uss file ke contents ko change kar dega . mtlb contents show ka live process hai to terminal par chalta rehta hai . and  q press karne par quit hota hai .
+
+cut  d: f1 /etc/passwd = d is delimiter here : is delimiter it means when : comes next field starts , f1 means field no.1 it can be 2 , 3, etc. 
+
+awk '{print $2}' file.txt  = jaisze kisi file mein jo content hai vo table ki form mein hai toh to iss command se apan uss table ka jo column dekhna chahe yeh vo column ko terminal par print   kar dega . yaha 2 mtlb second column hai .
+
+awk -F':' '{print $1}' passwd = yeh ek aur type ka awk command hai .
+ 
+
+sed 's/corona/covid/g' file.txt = yeh command file ke saare corona word ko covid se badalkar content show kar dega. but changes ko save nhi karega .
+
+sed -i 's/corona/covid/g' file.txt = yeh command file ke saare corona word ko covid se badalkar content show kar dega. aur yeh command  changes ko save bhi karega .
+
+uptime > /tmp/sysinfo.txt =  uptime ki value ko root directory ke andar tmp directory ke andar sysinfo.txt file mein daal dega .
+aur agar yeh file nhi bani hogi to yeh file banakar dal dega. agar pehle iss file mein agar koi content hoga to vo delete ho jaayega.
+
+uptime >> /tmp/sysinfo.txt = uptime ki value ko file ke andar append karega mtlb pehele jo content hai vo bhi rahega aur uptime ki value aur add ho jaayegi.
+
+free -m = shows the information about memory utilzation . mem is for physical rem and swap is for virtual memory .
+
+freee -m &>> /tmp/sysinfo.txt = yaha jaise command ka spell wrong hai fir bhi & lage hone ke karan se error terminal par show nhi hoga ,yeh error bhi sysinfo.txt mein   jaakar append ho jaayega.
+
+echo "good morning" = yeh command se good morning type ho jaayega.
+
+echo "good morning" > /tmp/sysinfo.txt = yeh command  good morning ko sysifo.txt file mein daal dega.
+
+/dev/null = yeh usss file ka naam hai jisme ko bhi ccontent nhi hota hai aur naahi yah koi content store karta hai .
+
+cat /dev/null > /tmp/sysinfo.txt = this command is used when iff we want to delete the whole  content from the  file.
+
+find /etc -name host* = it is used to find the files with name in the directory. here name is host and the directory is /etc .
+
+locate host = it is used to find the files with name in whole root directory(/) . and before running this command we have to run a command = updatedb . so that it    will not show the files that are deleted with that name . here name is host.
+
+
+*****updatedb = yeh work nhi kar rha hai .
+
+ 
+------------------------------------
+
+piping commands :-
+
+wc -l /etc/passwd = yeh command passwd file mein kitni line hai yeh batayega. used for counting the lines.
+
+ls | wc -l = if you are in any directory like  etc and want to count the files in that directory then it will give the no. of files the directory have .
+
+ls | grep host = all the files which starts with the name host then it will shows the names of that files .
+
+--------------------------------------
+
+user and groups:-
+ 
+useradd ansible = this command is used to add new user.
+
+groupadd devops = this command is used to add new group. 
+
+usermod -aG devops jenkins  = this command is used to add a user in the group . here user named as jenkins is  adding in the group named as devops .
+
+vim /etc/group = you can add the user with help of the vim editor also . by editing and adding the username in the user list of that groups and then save.
+
+id ansible = this command is used to find the details of the user . here username is ansible .
+
+passwd ansible = this command is used to set the password for a user. here user is ansible . but  as a root user you don't require any password. 
+
+su - username = this is the  command for a root user to switch on any user.
+
+last =shows the users who logged into your systems (whole login  history of users).
+
+who = shows the user who is currently logged in.
+
+****lsof -u username = LiSt Open Files' is used to find out which files are open by which process in present user .
+
+userdel ansible  = this command is used to delete the user . here username is ansible. but by this command the home directory of that user will not delete.
+
+userdel -r ansible = command to delete the user with home directory also. here username is ansible.
+
+groupdel devops = this command is used to delete the groups .
+
+-------------------------- file permissions 
+
+***** niche 3 command samajh nhi aaya 
+
+-rwx = read write execute for (root user)
+r-x = read and execute for (root group)
+r-x = read and execute for (others group)
+
+ls -ld /opt/devopsdir = to find the permissions of particular directory.
+
+chown  ansible:devops /opt/devopsdir = to change the ownership of a directory .
+
+chown -R  ansible:devops /opt/devopsdir = same as upper command but differnce is that this command change ownership recursively it means it change the ownership of all   the subdirectories and file in the present directory also .
+
+chmod o-x /opt/devopsdir = to change permission for other. here execute permission denied for others.
+
+chmod o-r /opt/devopsdir = to change permission for other. here read permission denied for others.
+ 
+chmod o-w /opt/devopsdir = to change permission for other. here write permission denied for others.
+
+chmod g+w /opt/devopsdir = to add write permision for group.
+
+permission are calculated by adding:
+
+4(for read)
+2(for write)
+1(for execute)
+
+chmod 640 myfile = read and write to user
+                   only read for group
+                   no permission for others
+
+----------------------------------------
+sudo :-
+
+visudo = this command will open the sudoers file in the write mode .and iss command ko run karne ki permission bhi keval root user ko hi hai .
+
+**sudoers file not have the write permission even for the root user also.
+
+method1
+** agar  apn koi user banate hai jaise ki ansible, usme yeh hota hai ki uss user mein sudo commmand chalane ki permission nahi hoti hai to iss ko solve karne ke liye    visudo ki help se sudoers file open karke vaha ansible ka naam add karna padega.  	
+
+method2
+
+[root@centos90 ~]# cd /etc/sudoers.d
+[root@centos90 sudoers.d]# ls
+vagrant
+[root@centos90 sudoers.d]# cp vagrant devops
+[root@centos90 sudoers.d]# ls
+devops vagrant
+[root@centos90 sudoers.d]# vim devops
+[root@centos90 sudoers.d]# cat vagrant 
+vagrant        ALL=(ALL)       NOPASSWD: ALL
+
+[root@centos90 sudoers.d]# cat devops
+%devops        ALL=(ALL)       NOPASSWD: ALL
+
+now any user belong to group devops can rum the sudo commands.
+
+
+------------------------------------------
+ package management :- 
+
+tree = this  command shows the directory in tree structure.
+
+curl link = it is used to download the package . here link is the link of that package taken from browser which we want to download . yeh command root user mein chalate hai.
+
+rpm -ivh packagename = this command is used to install the package . ivh meaning here is install and print human readable format .
+
+httpd = it is a web server package .
+
+yum automate the process of package installation and management .
+
+yum manage all the work of curl and rpm itself. 
+
+----------------------------------------
+services:-
+
+
+HTTPd is a software program, that usually runs in the background, as a process. It plays the role of server in a client-server model using HTTP and/or HTTPS network protocols. HTTPd waits for the incoming client requests and for each request it answers by replying with requested information.
+
+systemctl status httpd
+
+systemctl start httpd
+
+systemctl enable httpd
+ 
+systemctl is-active httpd
+
+systemctl is-enabled httpd
+
+--------------------------------------------
+
+processes:-
+
+top = show all the dynamic process based on the consumption of cpu and ram. it is similar to task manager in windows .
+
+ps aux = show similar information as top command .
+
+ps -ef = show the processes with parent process id .
+
+ps -ef | grep httpd 
+
+ps -ef | grep httpd | grep -v 'grep'  = yeh vo saare process ko unki parent process id ke ssath show karega jinme httpd word hoga aur grep word nhi hoga.
+
+kill processno. = kill parent process along with child process. first kill child process then kill parent process.
+
+kill -9 processno. = kill parent process only  not child process.
+
+orphan process = yeh vo saaare process hai jinke parent process kill ho chuke hai . after deleting their parent process these process are adopted by the systemd process.
+
+best way to clear the zombie process is to reboot the system.
+----------------------------------------------------
+
+archiving :-
+
+tar = 
+
+-----------------------------------------------------
+ubuntu specifc commands :-
+
+
+adduser devops = this command is used to add the user .
+
+to open the sudoers file in vim editor 
+1)  export EDITOR= vim
+2)  visudo
+
+wget link = command is used to download a package .
+
+dpkg -i packagename = used to install the package.
+
+dpkg -l = to list all the debian packages.
+
+dpkg -r tree = command to remove the package . here package is tree.
+
+cd /etc/apt/sources.list = this file  contains the repository information.
+
+apt update 
+
+apt search tree
+
+httpd in centos7 as same as apache2 in ubuntu18
+
+apt upgrade = command to upgrade all the packages .
+
+apt remove apache2 = to  remove the packages . here package is apache2 . but it will not remove the data and configuration of the service.
+
+apt install apache2 = installing package apache2 .
+
+apt purge apache2 = it completely remove the package with data and configuration also. here package is apache2.
+
+----------------------------------------------
+problem:-
+
+vagrant user visudo command kyu nhi chala paa rha hai .
+
+ agr jenkins sudo -i chala paa raha hai to su - ansible command kyu nahi chala paa raha hai.
+
+vagrant user mein jab user add karna hota hai to command ke aage sudo lagane par hi command chalta hai baaki kyu nahi chalta hai.
+
+sudo aur yum kab aur kaha kha use hota  hai
+.
+systemctl reload httpd aur systemctl restart httpd kaam nahi kar rahe hai 
+.
+-----------------------ps -ef command kya karta hai. = yeh parent-child relation ki tarah se process ko show karta hai .
+
+tar
+zip
+
+------------------------what to use for installing the package dpkg or apt commands . kisi package ka installer agar already download hai to dpkg use karenge . nahi toh apt commands use kar sakte hai agar package scratch se download and install karna hai toh .
+
+
+-------------------------------------------------------------------------------------

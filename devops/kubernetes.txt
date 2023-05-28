@@ -1,0 +1,134 @@
+kubernetes: kubernetes is most popular container orchestrtion tool.                                                          ( kubectl cheat sheet mein easy rahega command dekhne ke liye.)
+
+####Architecture:-
+
+master: kube api server = it handles all the incoming and outgoing communication. it exposses the kubernetes api.it is the front end of the kubernetes control plane. admin connects to it using kubectl cli. kubectl should be installed in our system.
+
+master:etcd server= it is a key value store . it stores all the information of your kubernetes cluster. kube api stores and retrieves information from it . it stores all the runtime information or the current state of everythinng in the cluster and should be backed up regularly.
+
+master:kubescheduler= it is going to schedule your container on the right node. scheduling decision depends on the factor such as individual & collective resource requirements , hardware/software policy constraints ,affinity and antiaffinityspecifications , data locality , etc. or it can be said as health status of worker nodes.
+
+master:controllermanager= each controller has a different process . to reduce complexity many type of controllers combined in it . 
+1) Node controller = responsible for noticing and responding when node goes down.
+2) replication controller = responsible for maintaining the correct number of pods .
+3) endpoints controller = populates the endpoints object.
+4) service account &token controllers = create default accounts and api acces tokens for new namespaces. it manages the authentication and authorization.
+
+workernode:kubelet = it is a agent that runs on every node and this is going to listen kubernetes master request or commands.   when sccheduler decides that this worker node will run the container then the responsibility is given to kubelet to don this work like fetching image , run the container from that image.
+
+workernode:kubeproxy = network proxy that runs on each node in your cluster . in this we can set network rules also. like security group rules. the rules that allow network communication to your pod inside or outside of your clusters. 
+
+workernode:containerruntime = kubernetes support different types of runtime environment like docker engine , containerd , rkt etc while  docker swarm supports only docker engine. 
+
+Addons = Dns , webui , container resource monitoring , cluster level logging. (yeh samajh nhi aaye) 
+
+questions = worker node > docker engine > pods > container . 
+
+####overlays network: pod 1 in node 1 and pod 6 in node 3 and they want to interact so for this there is a overlay network like vpc in aws so we have a joint network (a virtual network) that connects all the nodes and every node  will have the subnet like a local area network or a private network  running inside the node . and we see there is a bridge in node which acts like a switch so all the pod running in a node will be able to communicate  with each other but when it wants to connect to a container running in a pod in different node then it takes the use of like  wg0(router) . this router and switch are used for understanding . and these nodes connect with each other  in a bigger network is called as overlay network .
+
+####kubernetes setup tools :
+minikube = one node kubernetes cluster on your computer.
+kubeadm  = multi node kubernetes cluster . it can be created on any platform vm's , ec2 , physical machines, etc.
+kops = multi node kubernetes cluster on aws. 
+kubespray =  multi node kubernetes cluster on any cloud provider.
+eks , aks , gke are also some of kubernetes setup tools.
+
+####kubeconfig files to organize information about:
+clusters , users , namespaces and authentication mechanism. 
+A file that is used to configure access to clusters is called a kubeconfig file.
+
+
+####In Kubernetes, namespaces provides a mechanism for isolating groups of resources within a single cluster. Names of resources need to be unique within a namespace, but not across namespaces.Namespaces are a way to divide cluster resources between multiple users.
+four initial namespaces :-
+1)default = we can start using your new cluster without first creating a namespace.
+
+2)kube-node-release = This namespace holds Lease objects associated with each node.
+
+3)kube-public = This namespace is readable by all clients. in case that some resources should be visible and readable publicly throughout the whole cluster. 
+
+4)kube-system = the namespaces for objects created by the kubernetes system.
+
+kubectl get ns = to get the list of all namespaces.
+
+kubectl get all = this gives all the objects from the default namespaces.
+
+kubectl get all --all-namespaces = this gives all the objects frpm all the namespaces.
+
+kubectl get svc -n <namespacename> = this gives the list of svc in namespace.
+
+kubectl create ns <namespace name > = used to create namespace. 
+
+kubectl apply -f file.yaml = used to run a yaml  script  for kubernetes object as name given. like here file.yaml.
+
+kind            |          api version
+pod             |          v1
+service         |          v1
+deployment      |          apps/v1
+ingress         |          networking.../v1beta1
+
+kubectl get nodes = to get a list of nodes 
+
+kubectl describe node  (nodename) =  to get a whole information about node .
+
+kubectl get node i-04e188bfe63503230  -o yaml = to get a whole information about node but in yaml format .
+
+#### pod : A pod is the basic execution unit of a kubernetes application - the smallest and simplest unit in the kubernetes object model that you create and deploy. A pod represents process running on your cluster.
+pod that runs a single container is the most common use case. pod is a wrapper around a single container.
+multiple container pod is tightly coupled and need to share resources. one main container and other is side car or init container. pod is used to run a single instance of an application.
+
+kubectl run <podname> --image=<imagename> = used to create a pod. 
+
+kubectl describe pod  podname =  use to describe the pod .
+
+kubectl delete pod podname = to delete the pod. 
+
+kubectl get pod = to get list of pods
+
+kubectl get pod podname  -o wide = to get list of pods with little bit more information.
+
+kubectl get pod (podname) -o yaml = same command as a node for pod.
+
+ImagePullBackOff = jab image ka naam wrong de diya jaaye toh yeh error show karega ya fir agr image private repository mein hai(mtlb agr image public nhi hai) aur apan ne credential nhi diya hoga tab bhi yeh error aayega.
+
+CrashPullBackOff =This error indicates that a pod failed to start, Kubernetes tried to restart it, and it continued to fail repeatedly
+ex:- kubectl run web2 --image=nginx  test47 . jaise iss command mein test47 jo likha hua hai , iska kuch bhi mtlb nhi (random kuch bhi likha hua hai) to fir yeh pod hamesha fail hota rahega isliye yeh error show karega. 
+
+kubectl logs (podname) = this command will give the logs of pod whose name is given. also gives the ouput of the container running in pod .
+
+kubectl run (podname) --image=(imagename) -n <namespace name> = to run the pod with given podname with given imagename in a given namespace name.
+
+
+#### Service is a method for exposing a network application that is running as one or more Pods in your cluster . service in kubernetes is same as loadbalancer in ec2 . it works as a static endpoint like all pods are mortal or disposable so when they change their ip will also get change that's why we need service. 
+
+3 types of service:
+1)Nodeport = node port which is same as port mapping in docker used for connecting the pod to the outside world(not for production use cases).
+2)cluster ip is for internal communication of pod.
+3)load balancer loadbalancer is for expose to  outside network but for production purposes.
+
+** shayad node port ko host port bhi bolte hai.
+
+kubectl create -f service.yaml =  used to create a service in kubernetes.
+
+kubectl.exe get svc = command to get service names.
+
+kubectl.exe describe svc (service name) = command to get full information about service .
+
+kubectl get rs = to get list of replica set.
+
+kubectl delete pod (podname)  =  used to delete a pod.
+
+kubectl scale --replicas=1 rs/(replicasetname) =  used to update no. of replicas . here we are updating to 1. 
+
+kubectl edit rs (replicasetname) = is command apply karne ke badd ek file open hogi to usme no. of replica set update kar sakte hain. 
+
+kubectl get deployment = to get the list of deployment.
+
+ kubectl rollout undo deployment/nginx-deployment = kisi bhi deployment ko update karne ke baad vapas ussi version mein change kar dena.
+
+ kubectl rollout history deployment/nginx-deployment = to get the history of deployment .
+
+echo -n "secretpass" | base64 = kisi bhi word ko encode karne k liye . jaise yaha word hai secretpass liya hai.
+
+echo 'adshsjddav2332jad' | base64  --decode = kisi bhi word ko decode karne k liye.
+
+kubectl exec --stdin --tty (podname) -- /bin/bash = kisi bhi pod ke andar jaane k liye.
