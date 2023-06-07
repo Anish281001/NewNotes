@@ -80,7 +80,7 @@ kubectl run <podname> --image=<imagename> = used to create a pod.
 
 kubectl describe pod  podname =  use to describe the pod .
 
-kubectl delete pod podname = to delete the pod. 
+kubectl delete pod <podname> = to delete the pod. 
 
 kubectl get pod = to get list of pods
 
@@ -113,13 +113,25 @@ kubectl.exe get svc = command to get service names.
 
 kubectl.exe describe svc (service name) = command to get full information about service .
 
-kubectl get rs = to get list of replica set.
+kubectl delete -f service.yaml = used to delete the service made from service.yaml.
 
-kubectl delete pod (podname)  =  used to delete a pod.
+kubectl delete svc <servicename> = used to delete service.
+
+####replicaset = A ReplicaSet's purpose is to maintain a stable set of replica Pods running at any given time. As such, it is often used to guarantee the availability of a specified number of identical Pods.
+
+kubectl create -f replica.yaml = to create the replica set using the given script name.
+
+kubectl get rs = to get list of replica set.
 
 kubectl scale --replicas=1 rs/(replicasetname) =  used to update no. of replicas . here we are updating to 1. 
 
 kubectl edit rs (replicasetname) = is command apply karne ke badd ek file open hogi to usme no. of replica set update kar sakte hain. 
+
+####deployment:-
+
+kubectl describe deployment  <deployment name> = used to describe the deployment.
+
+kubectl set image deployment.v1.apps/nginx-deployment nginx=nginx:1.16.1= used to change the  image of the container in the deployment . iss change se naya replica set banega aur fir saare pods naye banenge. here nginx-deployment is deployment name , nginx is container name , nginx:1.16.1 is the new image name .
 
 kubectl get deployment = to get the list of deployment.
 
@@ -127,8 +139,26 @@ kubectl get deployment = to get the list of deployment.
 
  kubectl rollout history deployment/nginx-deployment = to get the history of deployment .
 
+ ------------------------------
+
 echo -n "secretpass" | base64 = kisi bhi word ko encode karne k liye . jaise yaha word hai secretpass liya hai.
 
 echo 'adshsjddav2332jad' | base64  --decode = kisi bhi word ko decode karne k liye.
 
 kubectl exec --stdin --tty (podname) -- /bin/bash = kisi bhi pod ke andar jaane k liye.
+
+-----------------------------------------------------------------------------------------------------
+Helm is a tool that automates the creation, packaging, configuration, and deployment of Kubernetes applications by combining your configuration files into a single reusable package.
+
+Notes :deployment documentation se baaki hai. 
+
+
+
+Q. What are the key features a Deployment adds compared to a ReplicaSet?
+Ans. In short, Deployment and ReplicaSet are used to manage the lifecycle of pods in Kubernetes. Deployment provides higher-level abstractions and additional features such as rolling updates, rollbacks, and versioning of the application. ReplicaSet is a lower-level abstraction that provides basic scaling mechanisms
+
+Q same port no. of different container (aryan kubernetes question)
+Ans. solve karna 
+
+
+https://www.freecodecamp.org/news/automate-mern-app-deployment-with-jenkins/  (mern stack simple project deployment)

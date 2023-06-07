@@ -1,0 +1,158 @@
+// note: credentials ko use karna dekhna ho toh tech world with nana ki jenkins pipeline tutorial dekho.
+
+
+CODE_CHANGES = getGitChanges()
+pipeline{
+    agent any
+    environment{
+            NEW_VERSION = '1.3.0'
+            SERVER_CREDENTIALS = credentials('server-credentials')  // yeh server-credentials  jenkins gui mein credentials section mein banta h. 
+    }  // yeh credentials jo hai vo credential plugin  insstall kaarne ke baad hi apn bna sakte h aur credential binding plugin install karne k   baad hi apn jenkins file mein use kar sakte hein.
+    stages{
+        stage("build"){
+            when{
+                expression{
+                    BRANCH_NAME == 'dev' && CODE_CHANGES == true
+                }
+            }
+            steps{
+                echo 'building the application'
+                echo  "this application is of version ${NEW_VERSION}"
+                echo  "this application is of version ${server-credentials}"
+                echo  'this application is of version ${NEW_VERSION}'           // aisa single invertwd comma wala nhi chalega.
+             }
+        }
+
+        stage("test") {
+            when {
+                expression {
+                    BRANCH_NAME == 'dev'
+                }
+            }
+
+            steps{
+                echo ' testing the application'
+            }
+        }
+
+    }
+
+    post{
+
+        always{
+
+        }
+        failure{
+
+        }
+        success{
+
+        }
+    }
+}
+
+---------------------------------------------------------------------------------------
+
+//  jenkins file mein yeh parameters add karne ke baad build karte samay jenkins puchega ki konse version ke saath aapko build karna hai.
+
+pipeline{
+    agent any 
+    parameters{
+        choice{name: 'VERSION' , choices: ['1.1.0' , '1.2.0' , '1.3.0'] , description: 'this is the version given to build'}
+        booleanParam(name: 'executeTests' , defaultValue: true , description: '')
+    }
+    stages{
+        stage("build"){
+            steps{
+                echo " building the application"
+            }
+        }
+        stage("test"){
+            when{
+                expression{
+                    param.executeTests == true
+                }
+            }
+            steps{
+                 echo " testing the application "
+            }
+        }
+        stage("deploy"){
+            steps{
+                 echo " deploying the application"
+                 echo " deploying the application with version ${params.VERSION}"
+            }
+        }
+    }
+}
+
+--------------------------------------------------------------------------------------
+
+// iss jenkinsfile mein apn koi groovy script ko import kar rahe hai so that we can use the functions of that groovy script. 
+
+def gv
+pipeline{
+    agent any
+    parameters{
+        choice{name: 'VERSION' , choices: ['1.1.0' , '1.2.0' , '1.3.0'] , description: 'this is the version given to build'}
+        booleanParam(name: 'executeTests' , defaultValue: true , description: '')
+    }
+
+    stages{
+        stage("init"){
+            steps{
+                script{
+                      gv = load " script.groovy"
+                 }
+            }
+        }
+        stage("build"){
+           steps{
+                script{
+                     gv.buildapp()
+                }
+            }
+        }
+        stage("test"){
+            when{
+                expression{
+                    params.executeTests
+                }
+            }
+           steps{
+                script{
+                       gv.testapp() 
+                }
+            }
+        }
+        stage("deploy"){
+            steps{
+                script{
+                      gv.deployapp()   
+                }
+            }
+        }
+
+    }
+}
+-----------------------
+
+script.groovy
+
+def buildapp()
+{
+     echo " building the application."   
+}
+def testapp()
+{
+    echo " testing the application."
+}
+def deployapp()
+{
+    echo " deploying the application."
+     echo " deploying the application with version ${params.VERSION}"
+}
+
+return this                     // this line is very important because by this line only we can import this script in jenkins file. 
+
+-------------------------------------------------------------------------------------------------------------

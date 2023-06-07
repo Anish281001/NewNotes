@@ -1,0 +1,8 @@
+git remote add NewNotes git@github.com:Anish281001/NewNotes.git
+git remote -v 
+ssh-keygen
+cd .ssh/
+cat id_rsa.pub 
+iske baad iss key ko account ke ssh key mein jaakar paste karna hai.
+fir changes ko commit karne ke baad 
+ git push NewNotes master
