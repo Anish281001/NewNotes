@@ -1,0 +1,14 @@
+selectionsort: o(n^2).
+
+bubblesort: worstcase: o(n^2).
+            bestcase: o(n).
+
+insertionsort: o(n^2).
+
+mergesort:  timecomplexity: o(nlogn).
+            spacecomplexity: o(n).
+
+quicksort:  timecomplexity: o(nlogn).
+            spacecomplexity: o(1).
+
+

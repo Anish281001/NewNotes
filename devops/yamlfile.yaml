@@ -1,0 +1,167 @@
+# note on html :- html provides parent child relationships. 
+
+# yaml = yaml ain't markup language
+
+# - it is a  data format used to exchange data.
+# -similar to xml and json
+# -in yaml you can store data only not the commands.
+
+
+# yaml , json and xml are the data serialization languages.
+
+# serialization is basically a process for converting data objects into a complex data structure into a stream of bytes.
+
+# another define of serialization is process of converting the data objects which is combinaton of code and data into series of bytes that saves the state of this object in a form that is easily transmitable. reverse of this known as deserialization.
+
+# object to file is serialization and file to object is deserialization.
+
+# markup languages are used to store the documents . ex- html. now yaml is not a markup language because it can't store the documents only but it can also store the objects data also. 
+ 
+# it is easily convertable to json and xml. and it is more powerful when representing complex data. 
+
+# parsing is easy in yaml.
+
+# yaml is a collection of zero or more documents . in which documents are separated by --- and  file is ended by ...
+
+# ---------------------------------------------------------------------------------------------------------------------------
+
+# syntax:
+
+"apple": "i am a fruit"
+1: "this is anish roll number"
+
+---     #document ended
+
+#lists
+
+- apple
+- mango
+- watermelon
+- papaya
+
+---
+
+cities:
+ - new delhi
+ - bhilwara
+ - mumbai
+
+---
+
+cities: [newdelhi, mumbai]
+
+---
+
+{mango: "yellowfruit" , age: 56 }    # if you have key value pair 
+
+---
+# string variables 
+
+myself: anish jain
+fruit: "apple"
+job: 'save'
+
+bio: |                      # yha iss khsdi dandi ka mtlb yeh h ki ki aage jitni bhi line mein apn content likhenge vo sab bio mein hi aayega.
+i am anish
+now i am studying devops.
+
+
+# write a single line in multiple lines.
+
+message: >
+
+this will
+all be 
+in one single line.
+
+# above one is same as below one.
+
+message: this will all be in one single line.
+
+number: 567
+marks: 89.67
+booleanValue: No    # n, N, false, False, FALSE
+# same for true -> yes , y, Y 
+
+# specify the type
+zero: !!int 0 
+positiveNum: !!int 6853     #doubt: yha bhi 06853 likh rahe to error aa rha h.
+negativeNum: !!int -56 
+binaryNum: !!int 0b11001     
+octalNum: !!int 06753    # doubt : yaha 06853 likh rahe toh dikkat kyu aa raha h. par same agar yamllint.com mein check kar rahe to vaid yaml bta rha h. 
+hexa: !!int 0x45
+commaValue: !!int +540_000     # yeh kya hota hai.
+exponential numbers: 6.02E4566 
+
+marks: !!float 56.89
+infinite: !!float .inf    #doubt : yaha bhi infinite likh rha hu to error de raha hai. par yamllint mein error nhi de raha hai.
+not a num: .nan
+
+
+surname: !!null NULL # or null NULL ~
+~: this is a null key.
+
+date: !!timestamp 2002-12-14   # doubt: iske baad ek time zone wal padhaya vo samjh nhi aaya. 
+
+
+# advance data types of yaml:-
+
+student: !!seq              # doubt : yaha agar !!seq mention nahi karenge toh kya difference hoga. and what is the difference between this and the one which is in line 44. 
+ - marks
+ - name 
+ - roll
+
+# like this also 
+
+cities: [ new delhi , mumbai]
+
+# some of the keys of the seq will be empty that sequences are known as sparse sequence. 
+
+sparse seq:
+ - hey 
+ - how 
+ -
+ - null
+ - sup
+
+
+# nested sequences 
+
+-
+ - mango
+ - aplle
+ - banana
+-
+ - marks
+ - rollno
+ - date 
+
+# key value pairs are called maps. and for maps you can use !!map .   #doubt : but isse use kaise karna hai. 
+
+# nested mappings map within a map.
+
+name:  anish
+role:
+   age:  22
+   job: student
+
+# below one is same as above 
+
+name: anish
+role: {age: 22, job: student}
+
+#pairs: keys may have duplicate values
+# !!pairs  
+
+pairexamples: !!pairs            # yaha !!pairs na mention karo toh bhi valid yaml bta rha h . datatype specify karne se kya mtlb.
+  - job: student
+  - job: teacher
+
+# same as 
+pairexamples: !!pairs [job: student, job: teacher]
+
+# this will be an array of hashtables.  #doubt  
+
+...   # document ended 
+
+ 

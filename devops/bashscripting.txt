@@ -1,0 +1,121 @@
+
+Bash scripting 
+
+#!/bin/bash = this is the path of the interpretor 
+#! =this is shebang character 
+# = use to comment out a line .
+
+chmod +x file.sh = to make the script executable.
+
+script mein variable isliye declare jaata hai kyunki kuch cheez jo alag alag enviorment k hisab se change karni padti hai to unko script mein har jagah se replace na karna pade isliye keval variable mein change kardenge to vo har jagah change ho jaayegi.
+
+echo $? = yeh command yeh pata lagane k liye chalaya jaata hai ki pichle wala command sahi se run hua ki nhi .
+if it give value 0 then pichle wala command sahi se run hua hai . else if it give non-zero value then pichla command sahi se run nahi hua hai .  and this command can also be said as exit code .
+
+\ = if we put the backward slash just before any special character then  special character will be a functionless special character.
+
+agar kisi bhi variable ko permanent rakhna agar system restart ho to bhi naa jaaye to iske liye user ki home directory ke andar ek hidden file hoti hai  bashrc name se usme vo variable ko add karna padega.
+
+uss file ko vim editor mein open karke below command add kar do.
+export season ="Monsoon" 
+here variable is season and its value is Monsoon here . so here it is permanent.
+
+the upper command is for a particular user .like vagrant , root , etc .
+but if you want to do it globally then we have to update this in vim /etc/profile . and preference is more for /etc/profile  as compared to bashrc file.
+
+read -p password = this command is used to take the input .
+
+read -sp password  = this command is used while you giving input you can't able to see what you are typing as like password.
+
+if [$num -eq 1 ] 
+then
+     if value of num equal to 1.
+
+elif [$num -gt 1 ] 
+then
+     if value of num greater than  1.
+
+else
+     if value of num less than 1.
+
+
+agar if ko end karna ho toh fi likha jaata hai .
+
+kabhi bhi apan koi process chalate hai toh uss process ki .pid file banti hai jaise ki httpd  process run kiya toh (httpd.pid) file banegi jab tak vo process run krega tab tak ke liye. 
+
+you can check cat/var/run/httpd/httpd.pid . shayad yeh command process id dega.
+
+
+crontab -e  = used for scheduling a  task or scheduling a command to run .
+then after this a file will open in vim editor.
+
+ MM HH DOM mm DOW command = here the command is that command which you want to run .
+
+ * * * * * command = it command run in each minute .
+
+ mm= minute
+ hh = hour 
+ DOM = date of month
+ mm = month
+ DOW= day of week 
+
+
+ -------for loop syntax
+
+ for var in java net python ruby php
+ do 
+   echo "looping"
+   echo "value of variable is $var"
+ done
+
+ done is for end here .
+
+--------while loop syntax
+
+counter = 0
+
+while [$counter -lt 5]
+do
+  echo "looping..."
+  echo "value of counter is $counter"
+  counter=$(($counter + 1))
+done 
+
+???????? what does ping command do?
+Test your internet connection. Check if a remote machine is online. Analyze if there are network issues, such as dropped packages or high latency.
+
+export EDITOR=vim (whenever by default vim is not opening).
+
+public key is going to act as a lock .
+private key is going to act as a key .
+
+
+--------------------------------------------------------------------------------------------------------------------------  
+********** yeh upar wale notes imran teli ke videos ke hai. aur niche wale linux hint bash scripting ke hai from youtube.
+--------------------------------------------------------------------------------------------------------------------------
+
+cat /etc/shells = it gives the name of the shells whichever is present in your system. from which we can run our script on any of the shells. 
+
+(hello2.sh) = iss script ko run karne ke baad , terminal par jo bhi likhenge , vo sab file.txt mein paste ho jaayega. aur likhne ke baad ctrl+d kar do taaki vo process end ho sake. 
+
+: ' commented words '  = this is way to comment out something in script.
+
+-a = and  (two conditions ke mid mein lagta hein.) 
+
+-o = or   (two conditions ke mid mein lagta hein.)
+
+
+
+------------------------------------------------
+
+note:
+Q1 aryan se heredocdelimiter samajhna hai?
+
+
+
+
+
+
+
+
+

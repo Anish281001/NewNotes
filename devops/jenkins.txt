@@ -1,0 +1,76 @@
+continous integration with jenkins 
+
+/var/lib/jenkins = it is a home directory of jenkins .
+
+ansible-galaxy init post-install =  command to init role directory structure . after this output on command line will be ( R
+
+http://18.234.193.28:8080/
+
+admin
+suinakan@gmail.com
+nopassword 
+
+jenkins is a continous integration server. 
+
+unit test checks whether unit of the code works or not. but code analysis checks if the code has any vulnerability , are you follwing the best practices , do you have the bug in the code and there are many other parameters on which code analysis will judge your code. 
+
+difference between freestyle projects and pipeline = if controller offine ho gaya toh jo freestyle job uss samay chal rhi thi vo jaise hi controller online aata hai toh resume nhi hogi but jo pipeline hoti hai, vo controller ke online aate hi resume ho jaati hai.   
+
+----------------------------------------
+
+docker exec -ti jenkins bash = command for entry in container .
+
+./scriptname.sh = to run the script
+
+docker cp script.sh jenkins:/tmp/script.sh = copying file script.sh from host machine to container named as jenkins at path /tmp/script.shayad
+
+ctrl r for searching the command  jo ki pehle execute kiye hue hai. aur kuch type karo jaise ki agar upar wala hi command search karna hai toh cp type kar do .
+
+ssh-keygen -f remote-key = creating a ssh key in centos
+
+
+/var/lib/jenkins/config.xml = main configuration file of jenkins.
+
+/usr/lib/systemd/system/jenkins.service = file to set the port on which we want to run the jenkins service .
+
+
+/var/lib/jenkins/secrets = here we will find initial admin password.
+
+/usr/lib/jvm = here we can find what version of java are installed in our system.
+
+------------------------------------
+
+jenkins revision:
+
+git repository se file uthakar jenkins mein build karna hai vo kaise karenge? try kara par error aa raha hai . 
+
+error = 
+Failed to connect to repository : Command "git ls-remote -h -- https://github.com/Anish281001/titanwork.git HEAD" returned status code 128:
+stdout:
+stderr: remote: Support for password authentication was removed on August 13, 2021.
+remote: Please see https://docs.github.com/en/get-started/getting-started-with-git/about-remote-repositories#cloning-with-https-urls for information on currently recommended modes of authentication.
+fatal: Authentication failed for 'https://github.com/Anish281001/titanwork.git/'
+
+-----------------------------------------------
+
+credential scopes :-
+
+System credentials : only available on jenkins server. Not for jenkins jobs. 
+
+Global credentials :    Everywhere accessible. 
+
+ex: - Global
+      anish@#123
+      Global
+ex: - system
+      anish@#123
+      system
+
+jenkinswebsite:-
+
+Global - if the credential/s to be added is/are for a Pipeline project/item. Choosing this option applies the scope of the credential/s to the Pipeline project/item "object" and all its descendant objects.
+
+System - if the credential/s to be added is/are for the Jenkins instance itself to interact with system administration functions, such as email authentication, agent connection, etc. Choosing this option applies the scope of the credential/s to a single object only.
+
+Q. sample job mein credentials add karne ka kya matlab rha h , mere to vaise bhi dev branch build ho gayi hai ?
+
